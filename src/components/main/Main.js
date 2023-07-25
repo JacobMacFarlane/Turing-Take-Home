@@ -1,13 +1,20 @@
 import React from "react";
 import NewsCard from "../newsCard/NewsCard";
 
-const Main = () => {
-    const allNews = null
+const Main = ({ articles}) => {
+    const allNews = articles.map((article, index) => {
+        return (
+            <NewsCard
+                article={article}
+                key={index}
+            />
+        )
+    })
 
 
     return (
-        <div>
-            All News
+        <div className="articles-cont">
+            {allNews}
         </div>
     )
 }
