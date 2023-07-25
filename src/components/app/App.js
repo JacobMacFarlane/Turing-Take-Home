@@ -2,6 +2,7 @@ import Main from "../main/Main";
 import Search from "../search/Search";
 import Header from "../header/Header";
 import Error from "../error/Error";
+import SingleNews from "../singleNews/SingleNews";
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { data } from "/Users/thamoops/take-home/turing-take-home/src/mockData.js";
@@ -59,6 +60,10 @@ function App() {
               {error === "" ? ( <Main articles={articles} />) : error === "fetch" ? (<Error message={"fetch"} />) : (<Error message={"search"} />)}
             </div>
           }/>
+          <Route path="/news/:title" element={<SingleNews articles={articles} />} />
+          <Route path="*" element={
+            <Error message={"url"} />
+          } />
       </Routes>
     </div>
   );
