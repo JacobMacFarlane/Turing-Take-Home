@@ -3,6 +3,7 @@ import "./Search.css";
 
 const Search = (props) => {
   const [query, setQuery] = useState("");
+  
   const handleSubmit = (query, event) => {
     event.preventDefault();
     props.search(query);
@@ -33,6 +34,7 @@ const Search = (props) => {
           🔎
         </button>
       </form>
+      <button className="clear-btn" id="clear-btn" onClick={(event) => props.reset(event)}>clear</button>
     </div>
   );
 };

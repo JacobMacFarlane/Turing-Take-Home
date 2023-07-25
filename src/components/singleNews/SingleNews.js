@@ -3,19 +3,24 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { data } from "/Users/thamoops/take-home/turing-take-home/src/mockData.js";
 import { NavLink } from "react-router-dom";
-
+import { fetchAllArticles } from "../../apiCalls";
 const SingleNews = () => {
     const [loading, setLoading] = useState(false);
+    const [articles, setArticles] = useState([])
     const [singularArticle, setSingularArticle] = useState([]);
     let { title } = useParams();
 
     const fetchSingle = async (newsTitle) => {
-        setLoading(true);
-        console.log(data.articles);
-        let thisOne = data.articles.filter((article) => {
-            return article.title === newsTitle;
-        });
-        setSingularArticle(thisOne);
+        try {
+            const data = await fetchAllArticles()
+            let thisOne = data.articles.filter((article) => {
+                return article.title === newsTitle;
+            })
+            console.log(thisOne)
+            setSingularArticle(thisOne);
+          } catch (error) {
+            console.log(error)
+          }
     };
 
     useEffect(() => {

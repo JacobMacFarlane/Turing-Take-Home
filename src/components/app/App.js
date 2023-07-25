@@ -6,6 +6,7 @@ import SingleNews from "../singleNews/SingleNews";
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { data } from "/Users/thamoops/take-home/turing-take-home/src/mockData.js";
+import { fetchAllArticles } from "../../apiCalls";
 import "./App.css";
 
 function App() {
@@ -13,25 +14,30 @@ function App() {
   const [totalArticles, setTotalArticles] = useState(0);
   const [error, setError] = useState("");
   const [storedArticles, setStoredArticles] = useState([]);
-  console.log(data, "in app");
 
-  const fetchArticles = () => {
-    if (data.status === "ok") {
-      setArticles(data.articles);
+  const fetchArticles = async () => {
+    try {
+      const data = await fetchAllArticles()
+      setArticles(data.articles)
       setTotalArticles(data.totalResults);
-    } else {
-      setError("fetch");
+    } catch (error) {
+      setError("fetch")
     }
   };
+console.log(articles.length)
   const searchResults = (searchValue) => {
     setStoredArticles(articles);
     let lowerSearchValue = searchValue.toLowerCase();
-    let nameSearchResults = articles.filter(
-      (article) =>
-        article.author.toLowerCase().includes(lowerSearchValue) ||
-        article.title.toLowerCase().includes(lowerSearchValue) ||
-        article.description.toLowerCase().includes(lowerSearchValue)
-    );
+    let nameSearchResults = articles.filter((article) => {
+      return (
+        article.author?.toLowerCase().includes(lowerSearchValue) ||
+        article.title?.toLowerCase().includes(lowerSearchValue) ||
+        article.description?.toLowerCase().includes(lowerSearchValue)
+      );
+    });
+  
+    console.log(nameSearchResults, 'important');
+    
     if (!nameSearchResults.length) {
       setError("search");
     } else {
